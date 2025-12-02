@@ -1,6 +1,7 @@
+//backend\src\routes\authRoutes.js
 const express = require("express");
 const { register, login } = require("../controllers/authController");
-const authMiddleware = require("../middleware/authMiddleware");  // <-- ADD THIS
+const authMiddleware = require("../middleware/authMiddleware");  
 
 const router = express.Router();
 
