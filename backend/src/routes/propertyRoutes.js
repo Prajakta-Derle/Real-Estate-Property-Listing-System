@@ -15,7 +15,14 @@ const {
 const router = express.Router();
 
 // Create property (seller or admin only)
-router.post("/add", authMiddleware, roleMiddleware(["seller", "admin"]), addProperty);
+router.post(
+  "/add",
+  authMiddleware,
+  roleMiddleware(["seller", "admin"]),
+  upload.array("images", 5),   
+  addProperty
+);
+
 
 // Read all properties (public)
 router.get("/", getAllProperties);

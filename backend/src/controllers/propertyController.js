@@ -5,18 +5,23 @@ exports.addProperty = async (req, res) => {
   try {
     const { title, price, location, description, type } = req.body;
 
-    // Ensure required fields exist
     if (!title || !price || !location || !type) {
       return res.status(400).json({ message: "Please enter all required fields." });
     }
 
-    // Create property assigned to logged-in user
+    // Handle images (0–5)
+    let imageUrls = [];
+    if (req.files && req.files.length > 0) {
+      imageUrls = req.files.map(file => file.path);
+    }
+
     const newProperty = new Property({
       title,
       price,
       location,
       description,
       type,
+      images: imageUrls,     
       owner: req.user.userId
     });
 
@@ -31,6 +36,7 @@ exports.addProperty = async (req, res) => {
     res.status(500).json({ message: "Server Error", error });
   }
 };
+
 
 exports.getAllProperties = async (req, res) => {
   try {

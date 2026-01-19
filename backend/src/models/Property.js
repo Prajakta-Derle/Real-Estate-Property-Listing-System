@@ -30,7 +30,7 @@ const propertySchema = new mongoose.Schema(
       required: true,
     },
     images: {
-      type: [String], // We'll use Cloudinary later
+      type: [String], 
       default: [],
     },
   },
