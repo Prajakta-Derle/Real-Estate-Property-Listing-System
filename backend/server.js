@@ -13,9 +13,13 @@ app.use(express.json());
 // Routes
 const authRoutes = require("./src/routes/authRoutes");
 const propertyRoutes = require("./src/routes/propertyRoutes");
+const userRoutes = require("./src/routes/userRoutes");
+const adminRoutes = require("./src/routes/adminRoutes");
 
 app.use("/api/auth", authRoutes);
 app.use("/api/property", propertyRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/admin", adminRoutes);
 
 // Connect to MongoDB
 mongoose

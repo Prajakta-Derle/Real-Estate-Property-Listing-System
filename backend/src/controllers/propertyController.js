@@ -1,67 +1,61 @@
-//backend\src\controllers\propertyController.js
 const Property = require("../models/Property");
+const User = require("../models/User");
+const subscriptionPlans = require("../config/subscriptionPlans");
 
+// ==========================
+// ADD PROPERTY
+// ==========================
 exports.addProperty = async (req, res) => {
   try {
     const { title, price, location, description, type } = req.body;
 
-    if (!title || !price || !location || !type) {
-      return res.status(400).json({ message: "Please enter all required fields." });
+    const seller = await User.findById(req.user.userId);
+
+    if (!seller || seller.role !== "seller") {
+      return res.status(403).json({ message: "Only sellers can add properties" });
     }
 
-    // Handle images (0–5)
     let imageUrls = [];
     if (req.files && req.files.length > 0) {
-      imageUrls = req.files.map(file => file.path);
+      imageUrls = req.files.map((file) => file.path);
     }
 
-    const newProperty = new Property({
+    const property = new Property({
       title,
       price,
       location,
       description,
       type,
-      images: imageUrls,     
-      owner: req.user.userId
+      images: imageUrls,
+      owner: seller._id
     });
 
-    await newProperty.save();
+    await property.save();
 
-    res.status(201).json({
-      message: "Property added successfully",
-      property: newProperty
-    });
-
+    res.status(201).json({ message: "Property added successfully", property });
   } catch (error) {
-    res.status(500).json({ message: "Server Error", error });
+    res.status(500).json({ message: "Add property failed" });
   }
 };
 
-
+// ==========================
+// GET ALL PROPERTIES
+// ==========================
 exports.getAllProperties = async (req, res) => {
   try {
-    const properties = await Property.find().populate("owner", "name email");
-    res.status(200).json(properties);
+    const properties = await Property.find()
+      .populate("owner", "name email")
+      .sort({ createdAt: -1 });
+
+    res.json(properties);
   } catch (error) {
-    res.status(500).json({ message: "Server Error", error });
+    res.status(500).json({ message: "Failed to fetch properties" });
   }
 };
 
-exports.getPropertyById = async (req, res) => {
-  try {
-    const property = await Property.findById(req.params.id).populate("owner", "name email");
-
-    if (!property) {
-      return res.status(404).json({ message: "Property not found" });
-    }
-
-    res.status(200).json(property);
-
-  } catch (error) {
-    res.status(500).json({ message: "Server Error", error });
-  }
-};
-
+// ==========================
+// UPDATE PROPERTY
+// ==========================
 exports.updateProperty = async (req, res) => {
   try {
     const property = await Property.findById(req.params.id);
@@ -70,30 +64,30 @@ exports.updateProperty = async (req, res) => {
       return res.status(404).json({ message: "Property not found" });
     }
 
-    // Check ownership
+    // seller can only update own property
     if (property.owner.toString() !== req.user.userId) {
-      return res.status(403).json({
-        message: "You are not allowed to update this property"
-      });
+      return res.status(403).json({ message: "Unauthorized" });
     }
 
-    // Update
-    const updatedProperty = await Property.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
+    const { title, price, location, description, type } = req.body;
 
-    res.status(200).json({
-      message: "Property updated successfully",
-      updatedProperty
-    });
+    property.title = title;
+    property.price = price;
+    property.location = location;
+    property.description = description;
+    property.type = type;
 
+    await property.save();
+
+    res.json({ message: "Property updated successfully", property });
   } catch (error) {
-    res.status(500).json({ message: "Server Error", error });
+    res.status(500).json({ message: "Update failed" });
   }
 };
 
+// ==========================
+// DELETE PROPERTY
+// ==========================
 exports.deleteProperty = async (req, res) => {
   try {
     const property = await Property.findById(req.params.id);
@@ -102,18 +96,14 @@ exports.deleteProperty = async (req, res) => {
       return res.status(404).json({ message: "Property not found" });
     }
 
-    // Check ownership
     if (property.owner.toString() !== req.user.userId) {
-      return res.status(403).json({
-        message: "You are not allowed to delete this property"
-      });
+      return res.status(403).json({ message: "Unauthorized" });
     }
 
-    await Property.findByIdAndDelete(req.params.id);
+    await property.deleteOne();
 
-    res.status(200).json({ message: "Property deleted successfully" });
-
+    res.json({ message: "Property deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Server Error", error });
+    res.status(500).json({ message: "Delete failed" });
   }
 };
