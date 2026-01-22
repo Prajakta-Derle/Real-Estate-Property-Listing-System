@@ -10,64 +10,52 @@ const Navbar = () => {
     navigate("/login");
   };
 
+  if (!user) return null;
+
   return (
-    <div
+    <header
       style={{
-        padding: "12px 20px",
-        backgroundColor: "#222",
-        color: "#fff",
+        height: 60,
         display: "flex",
-        justifyContent: "space-between",
         alignItems: "center",
+        justifyContent: "space-between",
+        padding: "0 20px",
+        borderBottom: "1px solid #ddd",
+        background: "#fff",
       }}
     >
-      {/* LEFT */}
-      <h3 style={{ margin: 0 }}>🏠 RealEstate App</h3>
+      <Link to="/" style={{ fontWeight: "bold", textDecoration: "none" }}>
+        RealEstate
+      </Link>
 
-      {/* RIGHT */}
-      <div
-        style={{
-          display: "flex",
-          gap: "20px",
-          alignItems: "center",
-        }}
-      >
-        {/* BUYER-ONLY LINKS */}
-        {user?.role === "buyer" && (
+      <nav style={{ display: "flex", gap: 16, alignItems: "center" }}>
+        {user.role === "buyer" && (
           <>
-            <Link
-              to="/buyer"
-              style={{ color: "#fff", textDecoration: "none" }}
-            >
-              Properties
-            </Link>
-
-            <Link
-              to="/buyer/wishlist"
-              style={{ color: "#fff", textDecoration: "none" }}
-            >
-              Wishlist ❤️
-            </Link>
+            <Link to="/buyer/properties">Browse Properties</Link>
+            <Link to="/buyer/wishlist">Wishlist</Link>
           </>
         )}
 
-        {/* ROLE LABEL */}
-        <span style={{ textTransform: "uppercase" }}>
-          {user?.role}
-        </span>
+        {user.role === "seller" && (
+          <>
+            <Link to="/seller">Dashboard</Link>
+            <Link to="/seller/my-properties">My Properties</Link>
+            <Link to="/seller/add-property">Add Property</Link>
+          </>
+        )}
 
-        {/* LOGOUT */}
-        <button
-          onClick={handleLogout}
-          style={{
-            padding: "6px 12px",
-            cursor: "pointer",
-          }}
-        >
-          Logout
-        </button>
-      </div>
-    </div>
+        {user.role === "admin" && (
+          <>
+            <Link to="/admin">Dashboard</Link>
+            <Link to="/admin/users">Users</Link>
+            <Link to="/admin/properties">Properties</Link>
+          </>
+        )}
+
+        <span>{user.email}</span>
+        <button onClick={handleLogout}>Logout</button>
+      </nav>
+    </header>
   );
 };
 

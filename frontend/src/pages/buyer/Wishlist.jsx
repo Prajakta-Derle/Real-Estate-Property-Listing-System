@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import Navbar from "../../components/common/Navbar";
-import { getWishlist, toggleWishlist } from "../../api/wishlist.api";
+import axios from "../../api/axios";
 import PropertyCard from "../../components/PropertyCard";
 
 const Wishlist = () => {
@@ -12,12 +11,16 @@ const Wishlist = () => {
 
     const loadWishlist = async () => {
       try {
-        const data = await getWishlist();
+        const res = await axios.get("/user/wishlist");
         if (isMounted) {
-          setWishlist(Array.isArray(data) ? data : []);
+          setWishlist(res.data);
         }
+      } catch (error) {
+        console.error("Failed to load wishlist", error);
       } finally {
-        if (isMounted) setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
@@ -28,35 +31,35 @@ const Wishlist = () => {
     };
   }, []);
 
-  const handleRemove = async (propertyId) => {
-    await toggleWishlist(propertyId);
+  const toggleWishlist = async (propertyId) => {
+    await axios.post(`/user/wishlist/${propertyId}`);
+
     setWishlist((prev) =>
       prev.filter((property) => property._id !== propertyId)
     );
   };
 
+  if (loading) {
+    return <p>Loading wishlist...</p>;
+  }
+
   return (
-    <>
-      <Navbar />
-      <div style={{ padding: 20 }}>
-        <h2>My Wishlist</h2>
+    <div>
+      <h2>My Wishlist</h2>
 
-        {loading && <p>Loading wishlist...</p>}
-
-        {!loading && wishlist.length === 0 && (
-          <p>No properties in wishlist</p>
-        )}
-
-        {wishlist.map((property) => (
+      {wishlist.length === 0 ? (
+        <p>Your wishlist is empty.</p>
+      ) : (
+        wishlist.map((property) => (
           <PropertyCard
             key={property._id}
             property={property}
             isWishlisted={true}
-            onToggleWishlist={handleRemove}
+            onToggleWishlist={toggleWishlist}
           />
-        ))}
-      </div>
-    </>
+        ))
+      )}
+    </div>
   );
 };
 

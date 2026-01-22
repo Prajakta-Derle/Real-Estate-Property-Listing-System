@@ -1,6 +1,12 @@
 import { useState } from "react";
 
-const PropertyCard = ({ property, isWishlisted, onToggleWishlist }) => {
+const PropertyCard = ({
+  property,
+  isWishlisted,
+  onToggleWishlist,
+  onDelete,
+  onEdit
+}) => {
   const images = Array.isArray(property.images) ? property.images : [];
   const [activeImage, setActiveImage] = useState(images[0] || null);
 
@@ -15,21 +21,23 @@ const PropertyCard = ({ property, isWishlisted, onToggleWishlist }) => {
         position: "relative",
       }}
     >
-      {/* ❤️ Wishlist Button */}
-      <button
-        onClick={() => onToggleWishlist(property._id)}
-        style={{
-          position: "absolute",
-          top: 10,
-          right: 10,
-          fontSize: 20,
-          background: "none",
-          border: "none",
-          cursor: "pointer",
-        }}
-      >
-        {isWishlisted ? "❤️" : "🤍"}
-      </button>
+      {/* ❤️ Wishlist Button (BUYER ONLY) */}
+      {onToggleWishlist && (
+        <button
+          onClick={() => onToggleWishlist(property._id)}
+          style={{
+            position: "absolute",
+            top: 10,
+            right: 10,
+            fontSize: 20,
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+          }}
+        >
+          {isWishlisted ? "❤️" : "🤍"}
+        </button>
+      )}
 
       {/* MAIN IMAGE */}
       {activeImage ? (
@@ -78,6 +86,25 @@ const PropertyCard = ({ property, isWishlisted, onToggleWishlist }) => {
       <p><strong>Type:</strong> {property.type}</p>
 
       {property.description && <p>{property.description}</p>}
+
+      {/* SELLER ACTIONS */}
+      {(onEdit || onDelete) && (
+        <div style={{ display: "flex", gap: 10, marginTop: 10 }}>
+          {onEdit && (
+            <button onClick={() => onEdit(property)}>
+              Edit
+            </button>
+          )}
+          {onDelete && (
+            <button
+              onClick={() => onDelete(property._id)}
+              style={{ color: "red" }}
+            >
+              Delete
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 };
