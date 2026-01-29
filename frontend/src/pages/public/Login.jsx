@@ -26,18 +26,13 @@ const Login = () => {
 
     try {
       const res = await axios.post("/auth/login", form);
-
-      // ✅ BACKEND STRUCTURE MATCH
       const { token, user, role } = res.data;
 
-      // store auth globally
       login(token, { ...user, role });
 
-      // ✅ ROLE-BASED REDIRECT
       if (role === "buyer") navigate("/buyer");
       else if (role === "seller") navigate("/seller");
       else if (role === "admin") navigate("/admin");
-
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
     } finally {
@@ -46,89 +41,116 @@ const Login = () => {
   };
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        background: "#f5f5f5",
-      }}
-    >
+    <div className="fixed inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 flex items-center justify-center px-4">
+      
       <form
         onSubmit={handleSubmit}
-        style={{
-          width: 350,
-          padding: 30,
-          background: "#fff",
-          borderRadius: 6,
-          boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-        }}
+        className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl p-8 sm:p-10"
       >
-        <h2 style={{ marginBottom: 20, textAlign: "center" }}>Login</h2>
+        {/* HEADING */}
+        <h2
+          className="
+            text-3xl font-extrabold text-center mb-2
+            bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600
+            bg-clip-text text-transparent
+            drop-shadow-[0_1px_4px_rgba(251,191,36,0.35)]
+          "
+        >
+          Welcome Back
+        </h2>
 
+        <p className="text-center text-slate-400 mb-8 text-sm sm:text-base">
+          Login to manage your properties
+        </p>
+
+        {/* ERROR */}
         {error && (
-          <div
-            style={{
-              color: "red",
-              marginBottom: 12,
-              padding: 8,
-              border: "1px solid red",
-              borderRadius: 4,
-              background: "#ffecec",
-              textAlign: "center",
-            }}
-          >
+          <div className="mb-6 text-sm text-red-400 bg-red-900/20 border border-red-800 rounded-lg px-4 py-2 text-center">
             {error}
           </div>
         )}
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-          required
-          style={inputStyle}
-        />
+        {/* EMAIL */}
+        <div className="mb-5">
+          <label className="block text-sm font-medium text-slate-300 mb-1">
+            Email Address
+          </label>
+          <input
+            type="email"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+            required
+            className="
+              w-full px-4 py-3
+              bg-slate-950
+              border border-slate-700
+              rounded-xl
+              text-slate-100
+              placeholder-slate-500
+              focus:outline-none
+              focus:ring-2 focus:ring-amber-500
+              focus:border-amber-500
+            "
+          />
+        </div>
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-          required
-          style={inputStyle}
-        />
+        {/* PASSWORD */}
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-slate-300 mb-1">
+            Password
+          </label>
+          <input
+            type="password"
+            name="password"
+            value={form.password}
+            onChange={handleChange}
+            required
+            className="
+              w-full px-4 py-3
+              bg-slate-950
+              border border-slate-700
+              rounded-xl
+              text-slate-100
+              placeholder-slate-500
+              focus:outline-none
+              focus:ring-2 focus:ring-amber-500
+              focus:border-amber-500
+            "
+          />
+        </div>
 
+        {/* LOGIN BUTTON */}
         <button
           type="submit"
           disabled={loading}
-          style={{
-            width: "100%",
-            padding: 10,
-            marginTop: 10,
-            cursor: "pointer",
-          }}
+          className="
+            w-full h-12
+            flex items-center justify-center
+            bg-amber-500
+            text-slate-900
+            rounded-xl
+            font-semibold
+            hover:bg-amber-600
+            transition
+            active:scale-95
+            disabled:opacity-60
+            disabled:cursor-not-allowed
+          "
         >
           {loading ? "Logging in..." : "Login"}
         </button>
 
-        <p style={{ marginTop: 15, textAlign: "center" }}>
+        {/* FOOTER */}
+        <p className="mt-8 text-center text-sm text-slate-400">
           Don’t have an account?{" "}
-          <Link to="/register">Register</Link>
+          <Link to="/register" className="text-amber-500 font-semibold hover:text-amber-400">
+            Register
+          </Link>
         </p>
       </form>
     </div>
   );
-};
-
-const inputStyle = {
-  width: "100%",
-  padding: 8,
-  marginBottom: 12,
 };
 
 export default Login;

@@ -1,4 +1,4 @@
-//backend\server.js
+// backend/server.js
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
@@ -17,7 +17,7 @@ const userRoutes = require("./src/routes/userRoutes");
 const adminRoutes = require("./src/routes/adminRoutes");
 
 app.use("/api/auth", authRoutes);
-app.use("/api/property", propertyRoutes);
+app.use("/api/properties", propertyRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/admin", adminRoutes);
 
@@ -33,7 +33,7 @@ app.get("/", (req, res) => {
 });
 
 // Start Server
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });

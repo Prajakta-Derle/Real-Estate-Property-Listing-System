@@ -2,25 +2,84 @@ import { Outlet, NavLink } from "react-router-dom";
 
 const SellerLayout = () => {
   return (
-    <div style={{ display: "flex", minHeight: "100vh" }}>
+    <div className="min-h-screen flex bg-slate-950 text-slate-100">
+      
+      {/* ================= SIDEBAR ================= */}
       <aside
-        style={{
-          width: 220,
-          borderRight: "1px solid #ddd",
-          padding: 20,
-          background: "#fafafa",
-        }}
+        className="
+          w-64
+          bg-slate-900
+          border-r border-slate-800
+          px-6 py-6
+          flex flex-col
+        "
       >
-        <h3 style={{ marginBottom: 20 }}>Seller Panel</h3>
+        {/* TITLE */}
+        <h3
+          className="
+            text-xl font-extrabold mb-8
+            bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600
+            bg-clip-text text-transparent
+          "
+        >
+          Seller Panel
+        </h3>
 
-        <nav style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          <NavLink to="/seller" end>Dashboard</NavLink>
-          <NavLink to="/seller/my-properties">My Properties</NavLink>
-          <NavLink to="/seller/add-property">Add Property</NavLink>
+        {/* NAVIGATION */}
+        <nav className="flex flex-col gap-3 text-sm font-medium">
+          <NavLink
+            to="/seller"
+            end
+            className={({ isActive }) =>
+              `
+                px-3 py-2 rounded-lg transition
+                ${
+                  isActive
+                    ? "bg-slate-800 text-amber-400"
+                    : "text-slate-300 hover:text-amber-400 hover:bg-slate-800"
+                }
+              `
+            }
+          >
+            Dashboard
+          </NavLink>
+
+          <NavLink
+            to="/seller/my-properties"
+            className={({ isActive }) =>
+              `
+                px-3 py-2 rounded-lg transition
+                ${
+                  isActive
+                    ? "bg-slate-800 text-amber-400"
+                    : "text-slate-300 hover:text-amber-400 hover:bg-slate-800"
+                }
+              `
+            }
+          >
+            My Properties
+          </NavLink>
+
+          <NavLink
+            to="/seller/add-property"
+            className={({ isActive }) =>
+              `
+                px-3 py-2 rounded-lg transition
+                ${
+                  isActive
+                    ? "bg-slate-800 text-amber-400"
+                    : "text-slate-300 hover:text-amber-400 hover:bg-slate-800"
+                }
+              `
+            }
+          >
+            Add Property
+          </NavLink>
         </nav>
       </aside>
 
-      <main style={{ flex: 1, padding: 30 }}>
+      {/* ================= MAIN CONTENT ================= */}
+      <main className="flex-1 px-6 py-6 overflow-y-auto">
         <Outlet />
       </main>
     </div>

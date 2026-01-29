@@ -1,9 +1,11 @@
 import api from "./axios";
 
-// Fetch properties with filters (backend-supported)
 export const getAllProperties = async (filters = {}) => {
-  const res = await api.get("/property", {
-    params: filters,
-  });
+  const res = await api.get("/properties", { params: filters });
+  return res.data;
+};
+
+export const getPropertyById = async (id) => {
+  const res = await api.get(`/properties/${id}`);
   return res.data;
 };

@@ -13,48 +13,117 @@ const Navbar = () => {
   if (!user) return null;
 
   return (
-    <header
-      style={{
-        height: 60,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "0 20px",
-        borderBottom: "1px solid #ddd",
-        background: "#fff",
-      }}
-    >
-      <Link to="/" style={{ fontWeight: "bold", textDecoration: "none" }}>
-        RealEstate
-      </Link>
+    <header className="w-full sticky top-0 z-50 bg-slate-950 border-b border-slate-800">
+      {/* INNER CONTAINER */}
+      <div className="h-16 max-w-[1400px] mx-auto px-4 md:px-8 flex items-center justify-between">
 
-      <nav style={{ display: "flex", gap: 16, alignItems: "center" }}>
-        {user.role === "buyer" && (
-          <>
-            <Link to="/buyer/properties">Browse Properties</Link>
-            <Link to="/buyer/wishlist">Wishlist</Link>
-          </>
-        )}
+        {/* LOGO */}
+        <Link
+          to="/"
+          className="
+            text-2xl font-extrabold tracking-tight
+            bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600
+            bg-clip-text text-transparent
+            hover:from-amber-300 hover:to-amber-500
+            transition
+          "
+        >
+          PropertyHunter
+        </Link>
 
-        {user.role === "seller" && (
-          <>
-            <Link to="/seller">Dashboard</Link>
-            <Link to="/seller/my-properties">My Properties</Link>
-            <Link to="/seller/add-property">Add Property</Link>
-          </>
-        )}
+        {/* NAVIGATION */}
+        <nav className="flex items-center gap-2 md:gap-6 text-sm md:text-base overflow-x-auto">
 
-        {user.role === "admin" && (
-          <>
-            <Link to="/admin">Dashboard</Link>
-            <Link to="/admin/users">Users</Link>
-            <Link to="/admin/properties">Properties</Link>
-          </>
-        )}
+          {/* BUYER LINKS */}
+          {user.role === "buyer" && (
+            <>
+              <Link
+                to="/buyer/properties"
+                className="whitespace-nowrap text-slate-300 hover:text-amber-400 font-medium transition"
+              >
+                Browse Properties
+              </Link>
+              <Link
+                to="/buyer/wishlist"
+                className="whitespace-nowrap text-slate-300 hover:text-amber-400 font-medium transition"
+              >
+                Wishlist
+              </Link>
+            </>
+          )}
 
-        <span>{user.email}</span>
-        <button onClick={handleLogout}>Logout</button>
-      </nav>
+          {/* SELLER LINKS */}
+          {user.role === "seller" && (
+            <>
+              <Link
+                to="/seller"
+                className="whitespace-nowrap text-slate-300 hover:text-amber-400 font-medium transition"
+              >
+                Dashboard
+              </Link>
+              <Link
+                to="/seller/my-properties"
+                className="whitespace-nowrap text-slate-300 hover:text-amber-400 font-medium transition"
+              >
+                My Properties
+              </Link>
+              <Link
+                to="/seller/add-property"
+                className="whitespace-nowrap text-slate-300 hover:text-amber-400 font-medium transition"
+              >
+                Add Property
+              </Link>
+            </>
+          )}
+
+          {/* ADMIN LINKS */}
+          {user.role === "admin" && (
+            <>
+              <Link
+                to="/admin"
+                className="whitespace-nowrap text-slate-300 hover:text-amber-400 font-medium transition"
+              >
+                Dashboard
+              </Link>
+              <Link
+                to="/admin/users"
+                className="whitespace-nowrap text-slate-300 hover:text-amber-400 font-medium transition"
+              >
+                Users
+              </Link>
+              <Link
+                to="/admin/properties"
+                className="whitespace-nowrap text-slate-300 hover:text-amber-400 font-medium transition"
+              >
+                Properties
+              </Link>
+            </>
+          )}
+
+          {/* USER EMAIL */}
+          <span className="hidden lg:inline text-slate-500 text-sm ml-4">
+            {user.email}
+          </span>
+
+          {/* LOGOUT BUTTON */}
+          <button
+            onClick={handleLogout}
+            className="
+              ml-2
+              bg-amber-500
+              text-slate-900
+              px-4 py-1.5
+              rounded-lg
+              text-sm font-semibold
+              hover:bg-amber-600
+              transition
+              whitespace-nowrap
+            "
+          >
+            Logout
+          </button>
+        </nav>
+      </div>
     </header>
   );
 };

@@ -14,6 +14,7 @@ import Register from "./pages/public/Register";
 import BuyerDashboard from "./pages/buyer/BuyerDashboard";
 import BrowseProperties from "./pages/buyer/BrowseProperties";
 import Wishlist from "./pages/buyer/Wishlist";
+import PropertyDetails from "./pages/buyer/PropertyDetails";
 
 import SellerDashboard from "./pages/seller/SellerDashboard";
 import AddProperty from "./pages/seller/AddProperty";
@@ -27,31 +28,39 @@ import AdminProperties from "./pages/admin/AdminProperties";
 function App() {
   return (
     <Router>
-      <Navbar />
-
       <Routes>
+        {/* ================= PUBLIC ROUTES ================= */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
+        {/* ================= BUYER ROUTES ================= */}
         <Route
           path="/buyer"
           element={
             <ProtectedRoute role="buyer">
-              <BuyerLayout />
+              <>
+                <Navbar />
+                <BuyerLayout />
+              </>
             </ProtectedRoute>
           }
         >
           <Route index element={<BuyerDashboard />} />
           <Route path="properties" element={<BrowseProperties />} />
+          <Route path="properties/:id" element={<PropertyDetails />} />
           <Route path="wishlist" element={<Wishlist />} />
         </Route>
 
+        {/* ================= SELLER ROUTES ================= */}
         <Route
           path="/seller"
           element={
             <ProtectedRoute role="seller">
-              <SellerLayout />
+              <>
+                <Navbar />
+                <SellerLayout />
+              </>
             </ProtectedRoute>
           }
         >
@@ -61,11 +70,15 @@ function App() {
           <Route path="edit-property" element={<EditProperty />} />
         </Route>
 
+        {/* ================= ADMIN ROUTES ================= */}
         <Route
           path="/admin"
           element={
             <ProtectedRoute role="admin">
-              <AdminLayout />
+              <>
+                <Navbar />
+                <AdminLayout />
+              </>
             </ProtectedRoute>
           }
         >

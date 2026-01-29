@@ -1,6 +1,6 @@
 import api from "./axios";
 
-// ✅ Backend prefix is /api/user
+// Backend prefix is /api/user
 export const toggleWishlist = async (propertyId) => {
   const res = await api.post(`/user/wishlist/${propertyId}`);
   return res.data;

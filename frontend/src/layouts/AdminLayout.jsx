@@ -11,28 +11,91 @@ const AdminLayout = () => {
   };
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh" }}>
+    <div className="min-h-screen flex bg-slate-950 text-slate-100">
+      
+      {/* ================= SIDEBAR ================= */}
       <aside
-        style={{
-          width: 220,
-          padding: "1rem",
-          borderRight: "1px solid #ddd",
-        }}
+        className="
+          w-64
+          bg-slate-900
+          border-r border-slate-800
+          px-6 py-6
+          flex flex-col
+        "
       >
-        <h3>Admin Panel</h3>
+        {/* TITLE */}
+        <h3
+          className="
+            text-xl font-extrabold mb-8
+            bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600
+            bg-clip-text text-transparent
+          "
+        >
+          Admin Panel
+        </h3>
 
-        <nav style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-          <Link to="/admin">Dashboard</Link>
-          <Link to="/admin/users">Users</Link>
-          <Link to="/admin/properties">Properties</Link>
+        {/* NAV LINKS */}
+        <nav className="flex flex-col gap-3 text-sm font-medium">
+          <Link
+            to="/admin"
+            className="
+              px-3 py-2 rounded-lg
+              text-slate-300
+              hover:text-amber-400 hover:bg-slate-800
+              transition
+            "
+          >
+            Dashboard
+          </Link>
 
-          <button onClick={handleLogout} style={{ marginTop: "1rem" }}>
-            Logout
-          </button>
+          <Link
+            to="/admin/users"
+            className="
+              px-3 py-2 rounded-lg
+              text-slate-300
+              hover:text-amber-400 hover:bg-slate-800
+              transition
+            "
+          >
+            Users
+          </Link>
+
+          <Link
+            to="/admin/properties"
+            className="
+              px-3 py-2 rounded-lg
+              text-slate-300
+              hover:text-amber-400 hover:bg-slate-800
+              transition
+            "
+          >
+            Properties
+          </Link>
         </nav>
+
+        {/* LOGOUT */}
+        <button
+  onClick={handleLogout}
+  className="
+    mt-auto
+    h-11
+    w-full
+    flex items-center justify-center
+    bg-amber-500
+    text-slate-900
+    rounded-xl
+    font-semibold
+    hover:bg-amber-600
+    transition
+    active:scale-95
+  "
+>
+  Logout
+</button>
       </aside>
 
-      <main style={{ flex: 1, padding: "1rem" }}>
+      {/* ================= MAIN CONTENT ================= */}
+      <main className="flex-1 px-6 py-6 overflow-y-auto">
         <Outlet />
       </main>
     </div>

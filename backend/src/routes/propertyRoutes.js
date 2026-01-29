@@ -6,11 +6,12 @@ const upload = require("../middleware/uploadMiddleware");
 const {
   addProperty,
   getAllProperties,
+  getPropertyById,
   updateProperty,
   deleteProperty
 } = require("../controllers/propertyController");
 
-const router = express.Router();
+const router = express.Router(); 
 
 // ==========================
 // ADD PROPERTY (SELLER / ADMIN)
@@ -27,6 +28,11 @@ router.post(
 // GET ALL PROPERTIES
 // ==========================
 router.get("/", getAllProperties);
+
+// ==========================
+// GET SINGLE PROPERTY BY ID
+// ==========================
+router.get("/:id", getPropertyById);
 
 // ==========================
 // UPDATE PROPERTY (SELLER / ADMIN)

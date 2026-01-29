@@ -107,3 +107,22 @@ exports.deleteProperty = async (req, res) => {
     res.status(500).json({ message: "Delete failed" });
   }
 };
+
+// ==========================
+// GET SINGLE PROPERTY BY ID
+// ==========================
+exports.getPropertyById = async (req, res) => {
+  try {
+    const property = await Property.findById(req.params.id)
+      .populate("owner", "name email phone");
+
+    if (!property) {
+      return res.status(404).json({ message: "Property not found" });
+    }
+
+    res.json(property);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch property" });
+  }
+};
+

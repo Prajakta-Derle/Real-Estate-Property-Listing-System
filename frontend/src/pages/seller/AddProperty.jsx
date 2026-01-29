@@ -10,7 +10,7 @@ const AddProperty = () => {
     price: "",
     location: "",
     type: "",
-    description: ""
+    description: "",
   });
 
   const [images, setImages] = useState([]);
@@ -50,7 +50,7 @@ const AddProperty = () => {
       images.forEach((img) => formData.append("images", img));
 
       await axios.post("/property/add", formData, {
-        headers: { "Content-Type": "multipart/form-data" }
+        headers: { "Content-Type": "multipart/form-data" },
       });
 
       alert("Property added successfully");
@@ -63,28 +63,94 @@ const AddProperty = () => {
   };
 
   return (
-    <div className="max-w-2xl">
-      <h2 className="text-2xl font-bold mb-4">Add Property</h2>
+    <div className="max-w-3xl mx-auto">
+      <h2 className="text-2xl font-extrabold mb-6 text-amber-400">
+        Add Property
+      </h2>
 
-      {error && <p className="text-red-600 mb-3">{error}</p>}
+      {error && (
+        <div className="mb-4 text-sm text-red-400 bg-red-950/40 border border-red-800 rounded-lg px-4 py-2">
+          {error}
+        </div>
+      )}
 
-      <form onSubmit={handleSubmit} className="space-y-3">
-        <input name="title" placeholder="Title" onChange={handleChange} />
-        <input name="price" type="number" placeholder="Price" onChange={handleChange} />
-        <input name="location" placeholder="Location" onChange={handleChange} />
-        <select name="type" onChange={handleChange}>
-          <option value="">Select Type</option>
+      <form
+        onSubmit={handleSubmit}
+        className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-5"
+      >
+        {/* TITLE */}
+        <input
+          name="title"
+          placeholder="Property Title"
+          onChange={handleChange}
+          className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500"
+        />
+
+        {/* PRICE */}
+        <input
+          name="price"
+          type="number"
+          placeholder="Price"
+          onChange={handleChange}
+          className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500"
+        />
+
+        {/* LOCATION */}
+        <input
+          name="location"
+          placeholder="Location"
+          onChange={handleChange}
+          className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500"
+        />
+
+        {/* TYPE */}
+        <select
+          name="type"
+          onChange={handleChange}
+          className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500"
+        >
+          <option value="">Select Property Type</option>
           <option value="house">House</option>
           <option value="apartment">Apartment</option>
           <option value="villa">Villa</option>
           <option value="commercial">Commercial</option>
         </select>
-        <textarea name="description" placeholder="Description" onChange={handleChange} />
-        <input type="file" multiple accept="image/*" onChange={handleImageChange} />
 
-        <button disabled={loading}>
-          {loading ? "Adding..." : "Add Property"}
-        </button>
+        {/* DESCRIPTION */}
+        <textarea
+          name="description"
+          placeholder="Description (optional)"
+          rows="4"
+          onChange={handleChange}
+          className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500"
+        />
+
+        {/* IMAGES */}
+        <input
+          type="file"
+          multiple
+          accept="image/*"
+          onChange={handleImageChange}
+          className="w-full text-sm text-slate-300 file:mr-4 file:px-4 file:py-2 file:rounded-lg file:border-0 file:bg-amber-500 file:text-slate-900 file:font-semibold hover:file:bg-amber-600"
+        />
+
+        {/* SUBMIT */}
+        <button
+          disabled={loading}
+          className="
+            w-full h-12
+            flex items-center justify-center 
+            bg-amber-500
+            text-slate-900
+            rounded-xl
+            font-semibold
+            hover:bg-amber-600
+            transition
+            disabled:opacity-60
+          "
+        >
+  {loading ? "Adding..." : "Add Property"}
+</button>
       </form>
     </div>
   );
