@@ -1,130 +1,116 @@
-Real Estate Property Listing System
+# 🏠 Real Estate Property Listing System
 
-A MERN stack-based web application enabling seamless interaction between property buyers and sellers, eliminating the need for third-party agents.
+A **MERN stack-based web application** that enables **direct interaction between property buyers and sellers**, eliminating the need for third-party agents.  
+The system provides a **secure, scalable, and role-based platform** for managing real estate listings.
 
-This system provides a secure platform for listing, browsing, and managing real estate properties with role-based access.
+---
 
-🛠️ Tech Stack
-Layer	Technology
-Frontend	React.js (Bootstrap / Tailwind CSS)
-Backend	Node.js + Express.js
+## 🚀 Project Overview
+
+This application allows:
+- **Sellers** to list and manage properties
+- **Buyers** to browse and search properties
+- **Admins** to approve listings and manage users
+
+The backend is fully implemented with authentication, authorization, and cloud-based image handling.
+
+---
+
+## 🛠️ Tech Stack
+
+Layer	        Technology
+Frontend	React.js (Tailwind CSS / Bootstrap)
+Backend	        Node.js, Express.js
 Database	MongoDB Atlas
 Authentication	JWT (JSON Web Tokens)
 File Uploads	Multer + Cloudinary
-Deployment	Render / Vercel
-✨ Core Features
-Authentication & Authorization
+Deployment	Render (Backend), Vercel (Frontend)
 
-Secure login & signup with JWT
+---
 
-Role-based access control (Buyer, Seller, Admin)
+## ✨ Core Features
 
-Protected routes with middleware
+### 🔐 Authentication & Authorization
+- Secure login & signup using JWT
+- Role-based access control (Buyer, Seller, Admin)
+- Protected routes using middleware
 
-Seller Features
+---
 
-Create property listings with images
+### 🏠 Seller Features
+- Create property listings with images
+- Update property details
+- Delete property listings
+- Image upload and management using Cloudinary
 
-Update property details
+---
 
-Delete properties
+### 🔍 Buyer Features
+- Browse all available properties
+- Search and filter properties
+- View detailed property information
+- Contact seller functionality
 
-Manage uploaded images (Cloudinary)
+---
 
-Buyer Features
+### 🛡️ Admin Features
+- Approve or reject property listings
+- Manage users and properties
+- Monitor application activity
 
-Browse all properties
-
-Search & filter properties (location, price, type, etc.)
-
-View detailed property pages
-
-Contact seller (email/message module)
-
-Admin Features
-
-Approve or reject property listings
-
-Manage users and listings
-
-📂 Backend Folder Structure
-backend/
-│── package.json
-│── package-lock.json
-│── server.js
-└── src/
-    ├── config/
-    │   └── cloudinary.js
-    │
-    ├── controllers/
-    │   ├── authController.js
-    │   └── propertyController.js
-    │
-    ├── middleware/
-    │   ├── authMiddleware.js
-    │   ├── roleMiddleware.js
-    │   └── uploadMiddleware.js
-    │
-    ├── models/
-    │   ├── Property.js
-    │   └── User.js
-    │
-    └── routes/
-        ├── authRoutes.js
-        └── propertyRoutes.js
+---
 
 
-The entire backend is fully implemented, including:
+---
 
-Database models
+## ✅ Project Status
 
-Controllers for all business logic
+### ✔ Completed
+- Backend environment setup
+- MongoDB Atlas integration
+- JWT authentication and role-based authorization
+- Property CRUD operations
+- Cloudinary image upload system
+- API tested using Postman
+- Modular and scalable backend architecture
+- Frontend UI development using React
+- API integration
+- Buyer, Seller, and Admin dashboards
+- Search and filtering UI
+- Responsive design
 
-Middleware for authentication/authorization
+---
 
-Cloudinary integration
+## ⚙️ Environment Variables
 
-Complete routing system
+Create a `.env` file in the backend directory and configure:
 
-🚀 Project Status: Backend Completed
-✔️ Completed:
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+CLOUDINARY_CLOUD_NAME=your_cloudinary_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
 
-Backend environment setup
 
-All models, controllers, routes
+---
 
-JWT authentication + role middleware
+## 🚀 Deployment
 
-Property CRUD operations
+- **Backend:** Deployed on Render
+- **Frontend:** To be deployed on Vercel
 
-Cloudinary file upload system
+---
 
-API tested with Postman
+## 👥 Team Members
 
-Project folder structure finalized
+- Nirupama Rajana  
+- Sarode Mamata Subhash  
+- Prajakta Pandurang Derle  
+- Kolluri Renusree  
+- Swathi Simbothula  
 
-🔜 Next Steps (Frontend Phase):
+---
 
-Connect frontend to backend APIs
 
-Build property listing UI
 
-Build property detail page
 
-Implement user dashboards (Buyer/Seller/Admin)
-
-Integrate search & filtering UI
-
-Finalize responsive design
-
-👥 Team Members
-
-Nirupama Rajana
-
-Sarode Mamata Subhash
-
-Prajakta Pandurang Derle
-
-Kolluri Renusree
-
-Swathi Simbothula
